@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model NoInternet {
+  idNoInternet        Int      @id @default(autoincrement())
+  Have3G              Int
+  Have4G              Int
+  Have5G              Int
+  Have_Fixed_internet Int
+  No3G                Int
+  No4G                Int
+  No5G                Int
+  No_Fixed_internet   Int
+  regions             Region[]
+}
+
+model Region {
+  idRegion                Int        @id @default(autoincrement())
+  RegionName              String
+  PlusCode                String
+  NoInternet_idNoInternet Int
+  NoInternet              NoInternet @relation(fields: [NoInternet_idNoInternet], references: [idNoInternet])
+}
